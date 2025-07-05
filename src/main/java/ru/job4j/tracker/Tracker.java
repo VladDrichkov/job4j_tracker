@@ -14,25 +14,15 @@ public class Tracker {
     }
 
     public Item[] findAll() {
-        Item[] result = new Item[items.length];
-        int sizeOfResult = 0;
-        for (int i = 0; i < items.length; i++) {
-            Item tempItem = items[i];
-            if (tempItem != null) {
-                result[sizeOfResult] = tempItem;
-                sizeOfResult++;
-            }
-        }
-        result = Arrays.copyOf(result, sizeOfResult);
-        return result;
+        return Arrays.copyOf(items, size);
     }
 
     public Item[] findByName(String key) {
-        Item[] result = new Item[items.length];
+        Item[] result = new Item[size];
         int sizeOfResult = 0;
-        for (int i = 0; i < items.length; i++) {
+        for (int i = 0; i < size; i++) {
             Item tempItem = items[i];
-            if (tempItem != null && tempItem.getName().equals(key)) {
+            if (tempItem.getName().equals(key)) {
                 result[sizeOfResult] = tempItem;
                 sizeOfResult++;
             }
@@ -70,15 +60,15 @@ public class Tracker {
 
     public void delete(int id) {
         int index = indexOf(id);
-        if (index == -1) {
+        boolean result = index != -1;
+        if (!result) {
             return;
-        } else {
-            int start = index + 1;
-            int distPos = index;
-            int length = size - index - 1;
-            System.arraycopy(items, start, items, distPos, length);
-            items[size - 1] = null;
-            size--;
         }
+        int start = index + 1;
+        int distPos = index;
+        int length = size - index - 1;
+        System.arraycopy(items, start, items, distPos, length);
+        items[size - 1] = null;
+        size--;
     }
 }
